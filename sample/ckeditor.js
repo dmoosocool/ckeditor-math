@@ -22,87 +22,87 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
+import Markdown from '@dmoosocool/ckeditor5-markdown-gfm/src/markdown';
+import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
 
 import { Math, AutoformatMath } from '../src/index';
 
 /* global document, window */
 
-ClassicEditor
-	.create( document.querySelector( '#editor' ), {
-		math: {
-			engine: 'katex',
-			katexRenderOptions: {
-				macros: {
-					'\\test': '\\mathrel{\\char`≠}'
-				}
+ClassicEditor.create( document.querySelector( '#editor' ), {
+	math: {
+		engine: 'katex',
+		katexRenderOptions: {
+			macros: {
+				'\\test': '\\mathrel{\\char`≠}'
 			}
-		},
-		plugins: [
-			Math,
-			AutoformatMath,
-			Essentials,
-			Autoformat,
-			BlockQuote,
-			Bold,
-			Heading,
-			Image,
-			ImageCaption,
-			ImageStyle,
-			ImageToolbar,
-			ImageUpload,
-			Indent,
-			Italic,
-			Link,
-			List,
-			MediaEmbed,
-			Paragraph,
-			Table,
-			TableToolbar,
-			CodeBlock,
-			Code,
-			Base64UploadAdapter
-		],
-		toolbar: [
-			'math',
-			'|',
-			'heading',
-			'|',
-			'bold',
-			'italic',
-			'link',
-			'code',
-			'bulletedList',
-			'numberedList',
-			'|',
-			'outdent',
-			'indent',
-			'|',
-			'uploadImage',
-			'blockQuote',
-			'insertTable',
-			'mediaEmbed',
-			'codeBlock',
-			'|',
-			'undo',
-			'redo'
-		],
-		image: {
-			toolbar: [
-				'imageStyle:inline',
-				'imageStyle:block',
-				'imageStyle:side',
-				'|',
-				'imageTextAlternative'
-			]
-		},
-		table: {
-			contentToolbar: [
-				'tableColumn',
-				'tableRow',
-				'mergeTableCells'
-			]
 		}
-	} )
+	},
+	plugins: [
+		Markdown,
+		Math,
+		SourceEditing,
+		AutoformatMath,
+		Essentials,
+		Autoformat,
+		BlockQuote,
+		Bold,
+		Heading,
+		Image,
+		ImageCaption,
+		ImageStyle,
+		ImageToolbar,
+		ImageUpload,
+		Indent,
+		Italic,
+		Link,
+		List,
+		MediaEmbed,
+		Paragraph,
+		Table,
+		TableToolbar,
+		CodeBlock,
+		Code,
+		Base64UploadAdapter
+	],
+	toolbar: [
+		'math',
+		'|',
+		'sourceEditing',
+		'heading',
+		'|',
+		'bold',
+		'italic',
+		'link',
+		'code',
+		'bulletedList',
+		'numberedList',
+		'|',
+		'outdent',
+		'indent',
+		'|',
+		'uploadImage',
+		'blockQuote',
+		'insertTable',
+		'mediaEmbed',
+		'codeBlock',
+		'|',
+		'undo',
+		'redo'
+	],
+	image: {
+		toolbar: [
+			'imageStyle:inline',
+			'imageStyle:block',
+			'imageStyle:side',
+			'|',
+			'imageTextAlternative'
+		]
+	},
+	table: {
+		contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+	}
+} )
 	.then( editor => {
 		window.editor = editor;
 		CKEditorInspector.attach( editor );

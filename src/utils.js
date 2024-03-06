@@ -1,13 +1,18 @@
+import rehypeKatex from 'rehype-katex';
+import rehypeStringify from 'rehype-stringify';
+import remarkMath from 'remark-math';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+
+import { unified } from 'unified';
 import { BalloonPanelView } from 'ckeditor5/src/ui';
 import { global } from 'ckeditor5/src/utils';
 
 export function getSelectedMathModelWidget( selection ) {
 	const selectedElement = selection.getSelectedElement();
-
 	if ( selectedElement && ( selectedElement.is( 'element', 'mathtex-inline' ) || selectedElement.is( 'element', 'mathtex-display' ) ) ) {
 		return selectedElement;
 	}
-
 	return null;
 }
 
@@ -43,70 +48,34 @@ export function extractDelimiters( equation ) {
 	};
 }
 
+function renderKatex( equation, el, display ) {
+	const file = unified()
+		.use( remarkParse )
+		.use( remarkMath )
+		.use( remarkRehype )
+		.use( rehypeKatex )
+		.use( rehypeStringify )
+		.processSync( display ? `$$${ equation }$$` : `$${ equation }$` );
+
+	el.innerHTML = String( file );
+	if ( display ) {
+		el.classList.add( 'katex-display' );
+	}
+}
+
 export async function renderEquation(
 	equation, element, engine = 'katex', lazyLoad, display = false, preview = false, previewUid, previewClassName = [],
 	katexRenderOptions = {}
 ) {
-	if ( engine === 'mathjax' && typeof MathJax !== 'undefined' ) {
-		if ( isMathJaxVersion3( MathJax.version ) ) {
-			selectRenderMode( element, preview, previewUid, previewClassName, el => {
-				renderMathJax3( equation, el, display, () => {
-					if ( preview ) {
-						moveAndScaleElement( element, el );
-						el.style.visibility = 'visible';
-					}
-				} );
-			} );
-		} else {
-			selectRenderMode( element, preview, previewUid, previewClassName, el => {
-				// Fixme: MathJax typesetting cause occasionally math processing error without asynchronous call
-				global.window.setTimeout( () => {
-					renderMathJax2( equation, el, display );
+	console.log( engine, katexRenderOptions );
+	selectRenderMode( element, preview, previewUid, previewClassName, el => {
+		renderKatex( equation, el, display );
 
-					// Move and scale after rendering
-					if ( preview ) {
-						// eslint-disable-next-line
-						MathJax.Hub.Queue( () => {
-							moveAndScaleElement( element, el );
-							el.style.visibility = 'visible';
-						} );
-					}
-				} );
-			} );
+		if ( preview ) {
+			moveAndScaleElement( element, el );
+			el.style.visibility = 'visible';
 		}
-	} else if ( engine === 'katex' && typeof katex !== 'undefined' ) {
-		selectRenderMode( element, preview, previewUid, previewClassName, el => {
-			katex.render( equation, el, {
-				throwOnError: false,
-				displayMode: display,
-				...katexRenderOptions
-			} );
-			if ( preview ) {
-				moveAndScaleElement( element, el );
-				el.style.visibility = 'visible';
-			}
-		} );
-	} else if ( typeof engine === 'function' ) {
-		engine( equation, element, display );
-	} else {
-		if ( typeof lazyLoad !== 'undefined' ) {
-			try {
-				if ( !global.window.CKEDITOR_MATH_LAZY_LOAD ) {
-					global.window.CKEDITOR_MATH_LAZY_LOAD = lazyLoad();
-				}
-				element.innerHTML = equation;
-				await global.window.CKEDITOR_MATH_LAZY_LOAD;
-				renderEquation( equation, element, engine, undefined, display, preview, previewUid, previewClassName, katexRenderOptions );
-			}
-			catch ( err ) {
-				element.innerHTML = equation;
-				console.error( `math-tex-typesetting-lazy-load-failed: Lazy load failed: ${ err }` );
-			}
-		} else {
-			element.innerHTML = equation;
-			console.warn( `math-tex-typesetting-missing: Missing the mathematical typesetting engine (${ engine }) for tex.` );
-		}
-	}
+	} );
 }
 
 export function getBalloonPositionData( editor ) {
@@ -145,35 +114,6 @@ function selectRenderMode( element, preview, previewUid, previewClassName, cb ) 
 	} else {
 		cb( element );
 	}
-}
-
-function renderMathJax3( equation, element, display, cb ) {
-	let promiseFunction = undefined;
-	if ( typeof MathJax.tex2chtmlPromise !== 'undefined' ) {
-		promiseFunction = MathJax.tex2chtmlPromise;
-	} else if ( typeof MathJax.tex2svgPromise !== 'undefined' ) {
-		promiseFunction = MathJax.tex2svgPromise;
-	}
-
-	if ( typeof promiseFunction !== 'undefined' ) {
-		promiseFunction( equation, { display } ).then( node => {
-			if ( element.firstChild ) {
-				element.removeChild( element.firstChild );
-			}
-			element.appendChild( node );
-			cb();
-		} );
-	}
-}
-
-function renderMathJax2( equation, element, display ) {
-	if ( display ) {
-		element.innerHTML = '\\[' + equation + '\\]';
-	} else {
-		element.innerHTML = '\\(' + equation + '\\)';
-	}
-	// eslint-disable-next-line
-	MathJax.Hub.Queue( [ 'Typeset', MathJax.Hub, element ] );
 }
 
 function createPreviewElement( element, previewUid, previewClassName, render ) {

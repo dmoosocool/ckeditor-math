@@ -170,10 +170,8 @@ export default class MathEditing extends Plugin {
 
 			const uiElement = writer.createUIElement( 'div', null, function( domDocument ) {
 				const domElement = this.toDomElement( domDocument );
-
-				renderEquation( equation, domElement, mathConfig.engine, mathConfig.lazyLoad, display, false, mathConfig.previewClassName,
+				renderEquation( equation, domElement, 'katex', mathConfig.lazyLoad, display, false, mathConfig.previewClassName,
 					null, mathConfig.katexRenderOptions );
-
 				return domElement;
 			} );
 

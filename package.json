@@ -1,94 +1,104 @@
 {
-  "name": "@isaul32/ckeditor5-math",
-  "version": "41.1.0",
-  "description": "Math feature for CKEditor 5.",
-  "keywords": [
-    "ckeditor",
-    "ckeditor5",
-    "ckeditor 5",
-    "ckeditor5-feature",
-    "ckeditor5-plugin",
-    "ckeditor5-math",
-	"katex"
-  ],
-  "main": "src/index.js",
-  "dependencies": {
-    "ckeditor5": "41.1.0"
-  },
-  "devDependencies": {
-    "@ckeditor/ckeditor5-autoformat": "41.1.0",
-    "@ckeditor/ckeditor5-basic-styles": "41.1.0",
-    "@ckeditor/ckeditor5-block-quote": "41.1.0",
-    "@ckeditor/ckeditor5-code-block": "41.1.0",
-    "@ckeditor/ckeditor5-core": "41.1.0",
-    "@ckeditor/ckeditor5-editor-classic": "41.1.0",
-    "@ckeditor/ckeditor5-essentials": "41.1.0",
-    "@ckeditor/ckeditor5-heading": "41.1.0",
-    "@ckeditor/ckeditor5-image": "41.1.0",
-    "@ckeditor/ckeditor5-indent": "41.1.0",
-    "@ckeditor/ckeditor5-inspector": "4.1.0",
-    "@ckeditor/ckeditor5-link": "41.1.0",
-    "@ckeditor/ckeditor5-list": "41.1.0",
-    "@ckeditor/ckeditor5-media-embed": "41.1.0",
-    "@ckeditor/ckeditor5-package-tools": "^1.1.0",
-    "@ckeditor/ckeditor5-paragraph": "41.1.0",
-    "@ckeditor/ckeditor5-table": "41.1.0",
-    "@ckeditor/ckeditor5-theme-lark": "41.1.0",
-    "@ckeditor/ckeditor5-upload": "41.1.0",
-    "eslint": "^7.32.0",
-    "eslint-config-ckeditor5": "^5.3.0",
-    "http-server": "^14.1.0",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.6",
-    "stylelint": "^13.13.1",
-    "stylelint-config-ckeditor5": ">=5.3.0"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=5.7.1"
-  },
-  "author": "Sauli Anto",
-  "license": "ISC",
-  "bugs": "https://github.com/isaul32/ckeditor5-math/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/isaul32/ckeditor5-math.git"
-  },
-  "files": [
-    "lang",
-    "src",
-    "build",
-    "theme",
-    "ckeditor5-metadata.json",
-    "CHANGELOG.md"
-  ],
-  "scripts": {
-    "dll:build": "ckeditor5-package-tools dll:build",
-    "dll:serve": "http-server ./ -o sample/dll.html",
-    "lint": "eslint --quiet src/**/*.js",
-    "lint:fix": "eslint --quiet src/**/*.js --fix",
-    "stylelint": "stylelint --quiet --allow-empty-input 'theme/**/*.css'",
-    "test": "ckeditor5-package-tools test",
-    "prepare": "yarn run dll:build",
-    "start": "ckeditor5-package-tools start"
-  },
-  "lint-staged": {
-    "**/*.js": [
-      "eslint --quiet"
+    "name": "@dmoosocool/ckeditor5-math",
+    "version": "41.1.0",
+    "description": "Math feature for CKEditor 5.",
+    "keywords": [
+        "ckeditor",
+        "ckeditor5",
+        "ckeditor 5",
+        "ckeditor5-feature",
+        "ckeditor5-plugin",
+        "ckeditor5-math",
+        "katex"
     ],
-    "**/*.css": [
-      "stylelint --quiet --allow-empty-input"
-    ]
-  },
-  "eslintIgnore": [
-    "node_modules/**",
-    "packages/*/node_modules/**",
-    "packages/*/build/**",
-    "packages/*/src/lib/**"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
+    "main": "src/index.js",
+    "dependencies": {
+        "@ckeditor/ckeditor5-markdown-gfm": "^41.1.0",
+        "@ckeditor/ckeditor5-source-editing": "^41.1.0",
+        "@dmoosocool/ckeditor5-markdown-gfm": "^0.0.1",
+        "ckeditor5": "41.1.0",
+        "rehype-katex": "^7.0.0",
+        "rehype-parse": "^9.0.0",
+        "rehype-stringify": "^10.0.0",
+        "remark-math": "^6.0.0",
+        "remark-parse": "^11.0.0",
+        "remark-rehype": "^11.1.0",
+        "unified": "^11.0.4"
+    },
+    "devDependencies": {
+        "@ckeditor/ckeditor5-autoformat": "41.1.0",
+        "@ckeditor/ckeditor5-basic-styles": "41.1.0",
+        "@ckeditor/ckeditor5-block-quote": "41.1.0",
+        "@ckeditor/ckeditor5-code-block": "41.1.0",
+        "@ckeditor/ckeditor5-core": "41.1.0",
+        "@ckeditor/ckeditor5-editor-classic": "41.1.0",
+        "@ckeditor/ckeditor5-essentials": "41.1.0",
+        "@ckeditor/ckeditor5-heading": "41.1.0",
+        "@ckeditor/ckeditor5-image": "41.1.0",
+        "@ckeditor/ckeditor5-indent": "41.1.0",
+        "@ckeditor/ckeditor5-inspector": "4.1.0",
+        "@ckeditor/ckeditor5-link": "41.1.0",
+        "@ckeditor/ckeditor5-list": "41.1.0",
+        "@ckeditor/ckeditor5-media-embed": "41.1.0",
+        "@ckeditor/ckeditor5-package-tools": "^1.1.0",
+        "@ckeditor/ckeditor5-paragraph": "41.1.0",
+        "@ckeditor/ckeditor5-table": "41.1.0",
+        "@ckeditor/ckeditor5-theme-lark": "41.1.0",
+        "@ckeditor/ckeditor5-upload": "41.1.0",
+        "eslint": "^7.32.0",
+        "eslint-config-ckeditor5": "^5.3.0",
+        "http-server": "^14.1.0",
+        "husky": "^4.2.5",
+        "lint-staged": "^10.2.6",
+        "stylelint": "^13.13.1",
+        "stylelint-config-ckeditor5": ">=5.3.0"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=5.7.1"
+    },
+    "author": "Sauli Anto",
+    "license": "ISC",
+    "bugs": "https://github.com/isaul32/ckeditor5-math/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/isaul32/ckeditor5-math.git"
+    },
+    "files": [
+        "lang",
+        "src",
+        "build",
+        "theme",
+        "ckeditor5-metadata.json",
+        "CHANGELOG.md"
+    ],
+    "scripts": {
+        "dll:build": "ckeditor5-package-tools dll:build",
+        "dll:serve": "http-server ./ -o sample/dll.html",
+        "lint": "eslint --quiet src/**/*.js",
+        "lint:fix": "eslint --quiet src/**/*.js --fix",
+        "stylelint": "stylelint --quiet --allow-empty-input 'theme/**/*.css'",
+        "test": "ckeditor5-package-tools test",
+        "prepare": "yarn run dll:build",
+        "start": "ckeditor5-package-tools start"
+    },
+    "lint-staged": {
+        "**/*.js": [
+            "eslint --quiet"
+        ],
+        "**/*.css": [
+            "stylelint --quiet --allow-empty-input"
+        ]
+    },
+    "eslintIgnore": [
+        "node_modules/**",
+        "packages/*/node_modules/**",
+        "packages/*/build/**",
+        "packages/*/src/lib/**"
+    ],
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     }
-  }
 }

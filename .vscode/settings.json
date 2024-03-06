@@ -1,0 +1,18 @@
+{
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll": "explicit"
+	},
+	"[vue]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"cSpell.words": ["katex"]
+}

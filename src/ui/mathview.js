@@ -32,7 +32,7 @@ export default class MathView extends View {
 	}
 
 	updateMath() {
-		renderEquation( this.value, this.element, this.engine, this.lazyLoad, this.display, true, this.previewUid, this.previewClassName,
+		renderEquation( this.value, this.element, 'katex', this.lazyLoad, this.display, true, this.previewUid, this.previewClassName,
 			this.katexRenderOptions );
 	}
 
